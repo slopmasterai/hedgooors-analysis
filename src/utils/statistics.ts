@@ -177,7 +177,6 @@ export const standardDeviation = (values: number[]): number => {
 export const correlation = (x: number[], y: number[]): number => {
   if (x.length !== y.length || x.length === 0) return 0;
 
-  const n = x.length;
   const meanX = mean(x);
   const meanY = mean(y);
 

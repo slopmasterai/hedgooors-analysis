@@ -1,5 +1,5 @@
 import { YearPredictions, Insight, Forecaster, MarketKey, MARKET_LABELS } from '../types';
-import { mean, standardDeviation, correlation } from './statistics';
+import { mean, standardDeviation } from './statistics';
 
 /**
  * Generate automated insights from prediction data

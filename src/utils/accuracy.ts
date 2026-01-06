@@ -1,5 +1,5 @@
 import { YearPredictions, HistoricalAccuracy, Forecaster, MarketKey } from '../types';
-import { calculateAverageMAPE, calculateBias, calculateRangeCaptureRate, calculateMAPE } from './statistics';
+import { calculateAverageMAPE, calculateBias, calculateRangeCaptureRate } from './statistics';
 import { ACTUAL_DATA, hasActualData } from '../data/actualData';
 
 /**
