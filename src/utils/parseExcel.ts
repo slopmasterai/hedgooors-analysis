@@ -49,25 +49,37 @@ const parseSheet = (
   const predictions: YearPredictions[] = [];
 
   for (const row of data) {
-    // Skip aggregate rows (Mean, Median, Min, Max)
+    // Skip aggregate rows (Mean, Median, Min, Max, Results)
     const name = row['Name / TG Handle'] || row['f'];
+    const nameStr = String(name).toLowerCase().trim();
+
     if (
       !name ||
       name === '' ||
-      name === 'Mean' ||
-      name === 'Median' ||
-      name === 'Min' ||
-      name === 'Max'
+      nameStr === 'mean' ||
+      nameStr === 'median' ||
+      nameStr === 'min' ||
+      nameStr === 'max' ||
+      nameStr === 'results' ||
+      nameStr === 'result' ||
+      nameStr === 'actual' ||
+      nameStr === 'actuals'
     ) {
       continue;
     }
 
+    // Parse name and handle
+    const parts = String(name).split('/');
+    const realName = parts[0]?.trim();
+    const handle = parts[1]?.trim();
+
+    // Prefer @ handle over real name for display
+    const displayName = handle || realName;
+
     const forecaster: Forecaster = {
-      id: `${year}-${name}`,
-      name: String(name).split('/')[0].trim(),
-      twitterHandle: String(name).includes('/')
-        ? String(name).split('/')[1]?.trim()
-        : undefined,
+      id: `${year}-${displayName}`,
+      name: displayName,
+      twitterHandle: handle,
     };
 
     // Parse recession prediction
@@ -211,7 +223,10 @@ export const getUniqueForecasters = (
     }
   }
 
-  return Array.from(forecasterMap.values()).sort((a, b) =>
-    a.name.localeCompare(b.name)
-  );
+  return Array.from(forecasterMap.values()).sort((a, b) => {
+    // Sort by name, treating @ handles specially (remove @ for sorting)
+    const nameA = a.name.replace(/^@/, '');
+    const nameB = b.name.replace(/^@/, '');
+    return nameA.localeCompare(nameB);
+  });
 };

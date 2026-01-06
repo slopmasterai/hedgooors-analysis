@@ -182,12 +182,7 @@ const LeaderboardRow = ({ entry, rank }: LeaderboardRowProps) => {
         </span>
       </td>
       <td className="py-4 px-4">
-        <div>
-          <div className="font-semibold text-white">{entry.forecaster.name}</div>
-          {entry.forecaster.twitterHandle && (
-            <div className="text-sm text-gray-500">@{entry.forecaster.twitterHandle}</div>
-          )}
-        </div>
+        <div className="font-semibold text-white">{entry.forecaster.name}</div>
       </td>
       <td className="py-4 px-4">
         <span className="text-white font-mono text-lg">
